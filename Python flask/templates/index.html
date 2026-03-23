@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Task Manager{% endblock %}
+
+{% block content %}
+<h1>Task Manager</h1>
+
+<div class="add-task">
+    <input type="text" id="task-input" placeholder="Enter a new task..." />
+    <button onclick="addTask()">Add Task</button>
+</div>
+
+<ul id="task-list">
+    {% for task in tasks %}
+    <li class="{{ 'done' if task.done else '' }}" data-id="{{ task.id }}">
+        <span>{{ task.title }}</span>
+        <button onclick="toggleTask({{ task.id }})">
+            {{ 'Undo' if task.done else 'Done' }}
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

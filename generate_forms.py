@@ -387,7 +387,7 @@ def page2(c, site_name):
     c.showPage()
 
 
-def page3(c, site_name, project_code):
+def page3(c, site_name, project_code, account_number):
     y = draw_header(c, site_name)
 
     c.setFillColor(ACCENT)
@@ -397,7 +397,8 @@ def page3(c, site_name, project_code):
 
     # Account number
     y = labeled_field(c, "Acct # *", "account_number", y,
-                      sub=f"Format example: 1234TGIP   (suggested suffix: {project_code})")
+                      sub="Format example: 1234TGIP",
+                      value=account_number)
 
     # Terms
     y = draw_section_title(c, "Terms and Conditions *", y)
@@ -444,7 +445,7 @@ def page3(c, site_name, project_code):
 
 
 def build_pdf(out_path, site_name, site_street, site_city, site_state,
-              site_zip, project_code):
+              site_zip, project_code, account_number):
     c = canvas.Canvas(out_path, pagesize=LETTER)
     c.setTitle(f"Onboarding/Monitoring Contract - {site_name}")
     c.setAuthor("RHR Systems Inc. dba Trend Systems Group")
@@ -452,7 +453,7 @@ def build_pdf(out_path, site_name, site_street, site_city, site_state,
 
     page1(c, site_name, site_street, site_city, site_state, site_zip, project_code)
     page2(c, site_name)
-    page3(c, site_name, project_code)
+    page3(c, site_name, project_code, account_number)
 
     c.save()
 
@@ -460,22 +461,24 @@ def build_pdf(out_path, site_name, site_street, site_city, site_state,
 def main():
     sites = [
         {
-            "filename": "405_S_Anaheim_Blvd_Apartments_Monitoring_Contract.pdf",
-            "name": "405 S Anaheim Blvd Apartments",
-            "street": "405 S Anaheim Blvd",
+            "filename": "405_BLDG_401-405_S_Anaheim_Blvd_Monitoring_Contract.pdf",
+            "name": "405 BLDG (401-405 S Anaheim Blvd)",
+            "street": "401-405 S Anaheim Blvd",
             "city": "Anaheim",
             "state": "CA",
             "zip": "",
-            "project_code": "405SAN",
+            "project_code": "401SAN",
+            "account_number": "AY630006",
         },
         {
-            "filename": "500_S_Anaheim_Blvd_Apartments_Monitoring_Contract.pdf",
-            "name": "500 S Anaheim Blvd Apartments",
-            "street": "500 S Anaheim Blvd",
+            "filename": "506_BLDG_520-524_S_Anaheim_Blvd_Monitoring_Contract.pdf",
+            "name": "506 BLDG (520-524 S Anaheim Blvd)",
+            "street": "520-524 S Anaheim Blvd",
             "city": "Anaheim",
             "state": "CA",
             "zip": "",
-            "project_code": "500SAN",
+            "project_code": "520SAN",
+            "account_number": "AY630007",
         },
     ]
 
@@ -488,6 +491,7 @@ def main():
             s["state"],
             s["zip"],
             s["project_code"],
+            s["account_number"],
         )
         print(f"Wrote {s['filename']}")
 
